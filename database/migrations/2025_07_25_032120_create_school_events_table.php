@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('school_events', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('location_id')->constrained()->onDelete('cascade');
-    $table->string('title');
-    $table->date('start_date');
-    $table->date('end_date');
-    $table->timestamps();
-});
+            $table->id();
+            $table->foreignId('campus_id')->constrained()->onDelete('cascade'); // 發生校區
+            $table->string('title'); // 事件標題
+            $table->date('start_date'); // 開始日期
+            $table->date('end_date'); // 結束日期
+            $table->timestamps();
+        });
     }
 
     /**

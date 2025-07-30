@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('locations', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');
-    $table->enum('type', ['school', 'cram_school']);
-    $table->timestamps();
-});
+        Schema::create('campuses', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique(); // 校區名稱 (必填，唯一)
+            $table->enum('type', ['school', 'cram_school']); // 校區類型
+            $table->string('color', 7)->default('#3788d8'); // 代表色 (必填)
+            $table->timestamps();
+        });
     }
 
     /**
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('campuses');
     }
 };
