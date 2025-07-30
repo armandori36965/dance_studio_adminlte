@@ -11,12 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_templates', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');
-    $table->string('color', 7)->default('#3788d8');
-    $table->timestamps();
-});
+        Schema::create('course_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // 課程類型名稱
+            $table->foreignId('campus_id')->constrained()->onDelete('cascade'); // 所屬校區
+            $table->enum('category', ['general', 'competition'])->default('general'); // 分類
+            $table->string('level')->nullable(); // 程度等級
+            $table->integer('duration')->default(60); // 課程時長 (分鐘)
+            $table->decimal('price', 8, 2)->default(0); // 課程價格
+            $table->integer('max_students')->default(20); // 最大學生數
+            $table->enum('status', ['active', 'inactive'])->default('active'); // 狀態
+            $table->timestamps();
+        });
     }
 
     /**
@@ -24,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_templates');
+        Schema::dropIfExists('course_types');
     }
 };
